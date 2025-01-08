@@ -6,6 +6,10 @@ import Form from "./Form";
 export default function MyApp() {
     const [characters, setCharacters] = useState([]);
 
+    function updateList(person) {
+      setCharacters([...characters, person]);
+    }
+
     function removeOneCharacter(index) {
         const updated = characters.filter((character, i) => {
             return i !== index;
@@ -14,14 +18,13 @@ export default function MyApp() {
         setCharacters(updated);
     }
 
-
     return (
       <div className="container">
         <Table 
             characterData={characters}
             removeCharacter={removeOneCharacter}
          />
-         <Form />
+         <Form handleSubmit={updateList}/>
       </div>
     );
   }
