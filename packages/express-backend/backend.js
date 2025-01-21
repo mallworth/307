@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import * as crypto from "node:crypto";
 
 const app = express();
 const port = 8000;
@@ -76,7 +77,17 @@ app.get("/users/:id", (req, res) => {
     }
 });
 
+function IDGenerator() {
+    let id = crypto.randomBytes(3).toString("hex");
+    while (users["users_list"].some((user) => user.id === id)) {
+        id = crypto.randomBytes(3).toString("hex");
+    }
+
+    return id;
+}
+
 const addUser = (user) => {
+    user.id = IDGenerator();
     users["users_list"].push(user);
     return user;
 }
