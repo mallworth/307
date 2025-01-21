@@ -28,6 +28,22 @@ export default function MyApp() {
       return promise;
     }
 
+    function deleteUser(id) {
+      const promise = fetch(`http://localhost:8000/users/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => {
+          if (response.status === 404) {
+            throw new Error("Resource not found");
+          }}
+        );
+        
+      return promise;
+    }
+
     function updateList(person) {
       postUser(person)
         .then(() => setCharacters([...characters, person]))
@@ -37,11 +53,17 @@ export default function MyApp() {
     }
 
     function removeOneCharacter(index) {
-        const updated = characters.filter((character, i) => {
+      const id = characters[index].id;
+      deleteUser(id)
+        .then(() => {
+          const updated = characters.filter((character, i) => {
             return i !== index;
+          });
+          setCharacters(updated);
         })
-
-        setCharacters(updated);
+        .catch((error) => {
+          console.log(error);
+        })
     }
 
     useEffect(() => {

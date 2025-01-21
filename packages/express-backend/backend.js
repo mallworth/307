@@ -110,7 +110,7 @@ app.delete("/users/:id", (req, res) => {
     if (result === undefined) {
         res.status(404).send("Resource not found.");
     } else {
-        res.status(200).send("OK");
+        res.status(204).send(`Deleted user with id: ${id}`);
     }
 });
 
