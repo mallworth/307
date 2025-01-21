@@ -18,7 +18,11 @@ export default function MyApp() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(person)
-      });
+      })
+        .then(response => {
+          if (response.status !== 201) {
+            throw new Error("Unsuccesful user insertion");
+          }});
 
       return promise;
     }
