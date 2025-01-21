@@ -22,8 +22,9 @@ export default function MyApp() {
         .then(response => {
           if (response.status !== 201) {
             throw new Error("Unsuccesful user insertion");
-          }});
-
+          }}
+        );
+        
       return promise;
     }
 
