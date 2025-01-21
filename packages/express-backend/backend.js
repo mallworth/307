@@ -98,7 +98,7 @@ const findUserByNameJob = (name, job) => {
 app.get("/users", (req, res) => {
     const name = req.query.name;
     const job = req.query.job;
-    console.log(name, job);
+    
     if (name != undefined && job != undefined) {
         let result = findUserByNameJob(name, job);
         result = { users_list: result };
