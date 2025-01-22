@@ -11,23 +11,6 @@ export default function MyApp() {
       return promise;
     }
 
-    function postUser(person) {
-      const promise = fetch("http://localhost:8000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(person)
-      })
-        .then(response => {
-          if (response.status !== 201) {
-            throw new Error("Unsuccesful user insertion");
-          }}
-        );
-        
-      return promise;
-    }
-
     function deleteUser(id) {
       const promise = fetch(`http://localhost:8000/users/${id}`, {
         method: "DELETE",
@@ -44,12 +27,32 @@ export default function MyApp() {
       return promise;
     }
 
+    function postUser(person) {
+      const promise = fetch("http://localhost:8000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(person)
+      })
+
+      return promise;
+    }
+
     function updateList(person) {
       postUser(person)
-        .then(() => setCharacters([...characters, person]))
-        .catch((error) => {
-          console.log(error);
-        });
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json();
+        } else {
+          throw new Error ("User insertion error.");
+        }})
+      .then((user) => {
+        setCharacters([...characters, user]);
+        })
+      .catch((error) => {
+        console.log(error);
+      });
     }
 
     function removeOneCharacter(index) {
