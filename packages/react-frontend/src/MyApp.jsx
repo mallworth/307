@@ -23,7 +23,7 @@ export default function MyApp() {
             throw new Error("Resource not found");
           }}
         );
-        
+      
       return promise;
     }
 
@@ -56,7 +56,7 @@ export default function MyApp() {
     }
 
     function removeOneCharacter(index) {
-      const id = characters[index].id;
+      const id = characters[index]._id;
       deleteUser(id)
         .then(() => {
           const updated = characters.filter((character, i) => {
